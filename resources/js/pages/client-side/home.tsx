@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/react'
 
 export default function Welcome() {
   return (
-    <Applayout classNmame='font-sans bg-gray-50'>
+    <Applayout>
       <Head title="hello" />
       {/*  <!-- Marquee Notice --> */}
     <div className="bg-accent text-white py-2">
