@@ -30,12 +30,12 @@ export default function Layout({ children }: PropsWithChildren) {
     <>
       <div className="font-sans bg-gray-50">
         {/* Top Bar */}
-        <div className="bg-primary text-white py-2">
+        <div className="bg-[#2563eb] text-white py-2">
           <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
             <div className="flex space-x-4 mb-2 md:mb-0">
-              <a href="#" className="text-white hover:text-accent"><i className="fab fa-facebook-f"></i></a>
-              <a href="#" className="text-white hover:text-accent"><i className="fab fa-twitter"></i></a>
-              <a href="#" className="text-white hover:text-accent"><i className="fab fa-youtube"></i></a>
+              <a href="#" className="text-white hover:text-[#f59e0b]"><i className="fab fa-facebook-f"></i></a>
+              <a href="#" className="text-white hover:text-[#f59e0b]"><i className="fab fa-twitter"></i></a>
+              <a href="#" className="text-white hover:text-[#f59e0b]"><i className="fab fa-youtube"></i></a>
             </div>
             <div className="flex flex-col md:flex-row md:space-x-6 text-sm">
               <div><i className="fas fa-phone-alt mr-1"></i> Phone: 056526307</div>
@@ -46,20 +46,20 @@ export default function Layout({ children }: PropsWithChildren) {
 
         {/* Header */}
         <header className="bg-white shadow-md">
-          <div className="container mx-auto px-4 py-4">
+          <div className="bg-white mx-auto px-4 py-4">
             <div className="flex flex-col md:flex-row items-center justify-between">
               <div className="flex items-center mb-4 md:mb-0">
                 <img src="https://placehold.co/100x100/2563eb/FFFFFF?text=F" alt="Fonet Logo" className="h-16 w-16 mr-4" />
                 <div>
-                  <h1 className="text-2xl font-bold text-primary">FONET STATIONARY CENTER</h1>
-                  <p className="text-sm text-gray-600 italic">Today Writes for Tomorrow</p>
+                  <h1 className="text-2xl font-bold text-[#2563eb]">FONET STATIONARY CENTER</h1>
+                  <p className="text-sm text-gray-500 italic">Today Writes for Tomorrow</p>
                 </div>
               </div>
               
               <div className="relative w-full md:w-1/3">
-                <input type="text" placeholder="Search..." className="w-full py-2 px-4 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-primary" />
-                <button className="absolute right-2 top-2 text-gray-400 hover:text-primary">
-                  <i className="fas fa-search"></i>
+                <input type="text" placeholder="Search..." className="w-full py-2 px-4 border border-gray-300 text-gray-600 rounded-full focus:outline-none focus:ring-2 focus:ring-[#2563eb]" />
+                <button className="absolute right-2 top-2 text-gray-800 hover:text-[#2563eb] px-2">
+                  <i className="fas fa-search "></i>
                 </button>
               </div>
             </div>
@@ -67,13 +67,13 @@ export default function Layout({ children }: PropsWithChildren) {
         </header>
 
         {/* Navigation */}
-        <nav className="bg-secondary sticky top-0 z-10 shadow-md">
+        <nav className="bg-[#1e40af] sticky top-0 z-10 shadow-md">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row justify-between">
-              <Link href="/" className="py-3 px-6 text-white hover:bg-primary">Home</Link>
-              <a href="#about" className="py-3 px-6 text-white hover:bg-primary">About Us</a>
+              <Link href="/" className="py-3 px-6 text-white hover:bg-[#2563eb]">Home</Link>
+              <a href="#about" className="py-3 px-6 text-white hover:bg-[#2563eb]">About Us</a>
               <div className="group relative">
-                <button className="py-3 px-6 text-white hover:bg-primary w-full md:w-auto text-left md:text-center flex justify-between items-center">
+                <button className="py-3 px-6 text-white hover:bg-[#2563eb] w-full md:w-auto text-left md:text-center hover:cursor-pointer flex justify-between items-center">
                   Services <i className="fas fa-chevron-down ml-2 text-xs"></i>
                 </button>
                 <div className="absolute left-0 mt-1 w-72 bg-white shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-20">
@@ -88,15 +88,15 @@ export default function Layout({ children }: PropsWithChildren) {
                   <a href="#services" className="block px-4 py-3 text-gray-800 hover:bg-blue-50">Price List</a>
                 </div>
               </div>
-              <a href="#notice" className="py-3 px-6 text-white hover:bg-primary">Notice</a>
-              <a href="#gallery" className="py-3 px-6 text-white hover:bg-primary">Gallery</a>
-              <a href="#contact" className="py-3 px-6 text-white hover:bg-primary">Contact Us</a>
+              <a href="#notice" className="py-3 px-6 text-white hover:bg-[#2563eb]">Notice</a>
+              <a href="#gallery" className="py-3 px-6 text-white hover:bg-[#2563eb]">Gallery</a>
+              <a href="#contact" className="py-3 px-6 text-white hover:bg-[#2563eb]">Contact Us</a>
             </div>
           </div>
         </nav>
 
         {/* Marquee Notice */}
-        <div className="bg-accent text-white py-2">
+        <div className="bg-[#f59e0b] text-white py-2">
           <div className="marquee">
             <p className="text-sm font-medium">
               <i className="fas fa-bullhorn mr-2"></i> Welcome to Fonet Stationary Center - Your one-stop solution for all stationary and printing needs. Quality services at affordable prices. Visit us today!
@@ -110,7 +110,7 @@ export default function Layout({ children }: PropsWithChildren) {
         </main>
 
         {/* Footer */}
-        <footer className="bg-primary text-white py-12">
+        <footer className="bg-[#2563eb] text-white py-12">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
               <div>
@@ -163,7 +163,7 @@ export default function Layout({ children }: PropsWithChildren) {
         {/* Back to Top Button */}
         <button 
           onClick={scrollToTop}
-          className={`fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-md transition-all duration-300 ${
+          className={`fixed bottom-6 right-6 bg-[#2563eb] text-white p-3 rounded-full shadow-md transition-all duration-300 ${
             isVisible ? 'opacity-100 visible' : 'opacity-0 invisible'
           }`}
         >
