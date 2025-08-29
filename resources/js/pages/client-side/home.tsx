@@ -1,7 +1,30 @@
-import Applayout from '@/layouts/client-side/appLayout'
-import { Head } from '@inertiajs/react'
+import Applayout from '@/layouts/client-side/appLayout';
+import { Head, useForm} from '@inertiajs/react';
+import { FormEvent} from 'react';
 
-export default function Welcome() {
+    export default function Contact() {
+        const { data, setData, post, processing, errors, reset } = useForm<{
+        first_name: string;
+        last_name: string;
+        email: string;
+        phone: string;
+        message: string;
+    }>({
+        first_name: '',
+        last_name: '',
+        email: '',
+        phone: '',
+        message: '',
+    });
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        post(route('contact.store'), {
+            preserveScroll: true,
+            onSuccess: () => {
+                reset();
+            },
+        });
+    };
   return (
     <Applayout>
       <Head title="Home" />
@@ -249,84 +272,96 @@ export default function Welcome() {
             </section>
 
             {/* Contact Section */}
-            <section id="contact" className="py-16 bg-white">
-                <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-center text-[#2563eb] mb-12">Contact Us</h2>
-                    
-                    <div className="flex flex-col md:flex-row gap-8">
-                        <div className="md:w-1/2">
-                            <form className="bg-gray-50 p-6 rounded-lg shadow-md">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                    <div>
-                                        <label htmlFor="first-name" className="block text-gray-700 mb-2">First Name</label>
-                                        <input type="text" id="first-name" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2563eb]" />
-                                    </div>
-                                    <div>
-                                        <label htmlFor="last-name" className="block text-gray-700 mb-2">Last Name</label>
-                                        <input type="text" id="last-name" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2563eb]" />
-                                    </div>
-                                </div>
-                                
-                                <div className="mb-4">
-                                    <label htmlFor="phone" className="block text-gray-700 mb-2">Phone No</label>
-                                    <input type="tel" id="phone" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2563eb]" />
-                                </div>
-                                
-                                <div className="mb-4">
-                                    <label htmlFor="email" className="block text-gray-700 mb-2">Email Address</label>
-                                    <input type="email" id="email" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2563eb]" />
-                                </div>
-                                
-                                <div className="mb-4">
-                                    <label htmlFor="file" className="block text-gray-700 mb-2">File (Optional)</label>
-                                    <input type="file" id="file" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2563eb]" />
-                                </div>
-                                
-                                <div className="mb-4">
-                                    <label htmlFor="message" className="block text-gray-700 mb-2">Message</label>
-                                    <textarea id="message" rows={5} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#2563eb]"></textarea>
-                                </div>
-                                
-                                <button type="submit" className="bg-[#2563eb] hover:bg-[#1e40af] text-white font-bold py-2 px-6 rounded-md transition duration-300">
-                                    Send Message
-                                </button>
-                            </form>
-                        </div>
-                        
-                        <div className="md:w-1/2">
-                            <div className="bg-gray-50 p-6 rounded-lg shadow-md h-full">
-                                <h3 className="text-2xl font-semibold text-[#2563eb] mb-6">Get In Touch</h3>
-                                
-                                <div className="mb-6">
-                                    <h4 className="text-lg font-medium text-[#1e40af] mb-2">Address</h4>
-                                    <p className="text-gray-700">Bharatpur Metropolitan City, Ward No. 10</p>
-                                    <p className="text-gray-700">Saptagandaki Chowk, Chitwan, Nepal</p>
-                                    <p className="text-gray-700">(In front of Saptagandaki Campus)</p>
-                                </div>
-                                
-                                <div className="mb-6">
-                                    <h4 className="text-lg font-medium text-[#1e40af] mb-2">Contact Information</h4>
-                                    <p className="text-gray-700 flex items-center mb-2">
-                                        <i className="fas fa-phone-alt mr-3 text-[#2563eb]"></i> Phone: 056526307
-                                    </p>
-                                    <p className="text-gray-700 flex items-center mb-2">
-                                        <i className="fas fa-mobile-alt mr-3 text-[#2563eb]"></i> Mobile: 9845220077
-                                    </p>
-                                    <p className="text-gray-700 flex items-center mb-2">
-                                        <i className="fas fa-envelope mr-3 text-[#2563eb]"></i> Email: fcichitwan@gmail.com
-                                    </p>
-                                </div>
-                                
-                                <div>
-                                    <h4 className="text-lg font-medium text-[#1e40af] mb-2">Business Hours</h4>
-                                    <p className="text-gray-700">Sunday - Friday: 8:00 AM - 7:00 PM</p>
-                                    <p className="text-gray-700">Saturday: 9:00 AM - 5:00 PM</p>
-                                </div>
-                            </div>
-                        </div>
+           <section id="contact" className="py-16 bg-white">
+            <div className="container mx-auto px-4">
+                <h2 className="text-3xl font-bold text-center text-[#2563eb] mb-12">Contact Us</h2>
+
+                <div className="flex flex-col md:flex-row gap-8">
+                    <div className="md:w-1/2">
+                        <form onSubmit={handleSubmit} className="bg-gray-50 p-6 rounded-lg shadow-md">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label className="block text-gray-700 mb-2">First Name *</label>
+              <input 
+                type="text" 
+                value={data.first_name}
+                onChange={e => setData('first_name', e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                required
+              />
+              {errors.first_name && <p className="text-red-500 text-sm mt-1">{errors.first_name}</p>}
+            </div>
+            <div>
+              <label className="block text-gray-700 mb-2">Last Name *</label>
+              <input 
+                type="text" 
+                value={data.last_name}
+                onChange={e => setData('last_name', e.target.value)}
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                required
+              />
+              {errors.last_name && <p className="text-red-500 text-sm mt-1">{errors.last_name}</p>}
+            </div>
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Phone No *</label>
+            <input 
+              type="tel" 
+              value={data.phone}
+              onChange={e => setData('phone', e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+            {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Email Address *</label>
+            <input 
+              type="email" 
+              value={data.email}
+              onChange={e => setData('email', e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            />
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">File (Optional)</label>
+            <input 
+              type="file"
+              onChange={e => setData('file', e.target.files?.[0])}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md"
+            />
+            {errors.file && <p className="text-red-500 text-sm mt-1">{errors.file}</p>}
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 mb-2">Message *</label>
+            <textarea 
+              rows={5} 
+              value={data.message}
+              onChange={e => setData('message', e.target.value)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              required
+            ></textarea>
+            {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
+          </div>
+
+          <button 
+            type="submit"
+            disabled={processing}
+            className="bg-[#2563eb] hover:bg-[#1e40af] disabled:bg-gray-400 text-white font-bold py-2 px-6 rounded-md transition duration-300"
+          >
+            {processing ? 'Sending...' : 'Send Message'}
+          </button>
+        </form>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
     </Applayout>
   )
 }
