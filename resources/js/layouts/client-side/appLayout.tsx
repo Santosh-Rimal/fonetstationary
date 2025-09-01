@@ -55,7 +55,7 @@ export default function Layout({ children }: PropsWithChildren) {
                   <p className="text-sm text-gray-500 italic">Today Writes for Tomorrow</p>
                 </div>
               </div>
-              
+
               <div className="relative w-full md:w-1/3">
                 <input type="text" placeholder="Search..." className="w-full py-2 px-4 border border-gray-300 text-gray-600 rounded-full focus:outline-none focus:ring-2 focus:ring-[#2563eb]" />
                 <button className="absolute right-2 top-2 text-gray-800 hover:text-[#2563eb] px-2">
@@ -118,7 +118,7 @@ export default function Layout({ children }: PropsWithChildren) {
                 <h3 className="text-xl font-bold mb-4">FONET STATIONARY CENTER</h3>
                 <p className="text-blue-100">Today Writes for Tomorrow</p>
               </div>
-              
+
               <div>
                 <h4 className="text-lg font-semibold mb-4">Navigation</h4>
                 <ul className="space-y-2">
@@ -130,7 +130,7 @@ export default function Layout({ children }: PropsWithChildren) {
                   <li><a href="#contact" className="text-blue-100 hover:text-white">Contact Us</a></li>
                 </ul>
               </div>
-              
+
               <div>
                 <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
                 <p className="text-blue-100 mb-2">Bharatpur-10, Chitwan, Nepal</p>
@@ -138,7 +138,7 @@ export default function Layout({ children }: PropsWithChildren) {
                 <p className="text-blue-100 mb-2">Mobile: 9845220077</p>
                 <p className="text-blue-100 mb-2">Email: fcichitwan@gmail.com</p>
               </div>
-              
+
               <div>
                 <h4 className="text-lg font-semibold mb-4">Connect With Us</h4>
                 <div className="flex space-x-4 mb-4">
@@ -147,13 +147,13 @@ export default function Layout({ children }: PropsWithChildren) {
                   <a href="#" className="text-blue-100 hover:text-white text-xl"><i className="fab fa-youtube"></i></a>
                   <a href="#" className="text-blue-100 hover:text-white text-xl"><i className="fab fa-instagram"></i></a>
                 </div>
-                
+
                 <h4 className="text-lg font-semibold mb-2">Tools</h4>
                 <p className="text-blue-100">Date Convert/Unicode to Preeti</p>
                 <p className="text-blue-100">Preeti to Unicode Convert</p>
               </div>
             </div>
-            
+
             <div className="border-t border-blue-400 mt-8 pt-6 text-center text-blue-100">
               <p>&copy; 2023 Fonet Stationary Center. All rights reserved.</p>
             </div>
@@ -161,11 +161,10 @@ export default function Layout({ children }: PropsWithChildren) {
         </footer>
 
         {/* Back to Top Button */}
-        <button 
+        <button
           onClick={scrollToTop}
-          className={`fixed bottom-6 right-6 bg-[#2563eb] text-white p-3 rounded-full shadow-md transition-all duration-300 ${
-            isVisible ? 'opacity-100 visible' : 'opacity-0 invisible'
-          }`}
+          className={`fixed bottom-6 right-6 bg-[#2563eb] text-white p-3 rounded-full shadow-md transition-all duration-300 ${isVisible ? 'opacity-100 visible' : 'opacity-0 invisible'
+            }`}
         >
           <i className="fas fa-arrow-up"></i>
         </button>
