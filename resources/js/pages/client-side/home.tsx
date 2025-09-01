@@ -1,35 +1,41 @@
 import Applayout from '@/layouts/client-side/appLayout';
-import { Head, useForm} from '@inertiajs/react';
-import { FormEvent} from 'react';
+import { Head, useForm } from '@inertiajs/react';
+import { FormEvent } from 'react';
+import { usePage } from '@inertiajs/react'
 
-    export default function Contact() {
-        const { data, setData, post, processing, errors, reset } = useForm<{
+import { store } from '@/actions/App/Http/Controllers/ContactController'
+
+export default function Home() {
+    const { flash } = usePage<{ flash: { success?: string; error?: string } }>().props
+    console.log(flash)
+    const { data, setData, post, processing, errors, reset, } = useForm<{
         first_name: string;
         last_name: string;
         email: string;
         phone: string;
         message: string;
+        file: File | null;
     }>({
         first_name: '',
         last_name: '',
         email: '',
         phone: '',
         message: '',
+        file: null,
     });
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post(route('contact.store'), {
+        post(store.url(), {
+            onSuccess: () => reset(),
             preserveScroll: true,
-            onSuccess: () => {
-                reset();
-            },
+
         });
-    };
-  return (
-    <Applayout>
-      <Head title="Home" />
-      {/*  <!-- Marquee Notice --> */}
-   <section className="hero-bg py-20 text-white">
+    }
+    return (
+        <Applayout>
+            <Head title="Home" />
+            {/*  <!-- Marquee Notice --> */}
+            <section className="hero-bg py-20 text-white">
                 <div className="container mx-auto px-4 text-center">
                     <h2 className="text-4xl font-bold mb-4">Quality Printing & Stationary Services</h2>
                     <p className="text-xl mb-8">Serving Chitwan and surrounding areas since 2070 B.S.</p>
@@ -43,7 +49,7 @@ import { FormEvent} from 'react';
             <section id="about" className="py-16 bg-white">
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl font-bold text-center text-[[#2563eb]] mb-12">About Us</h2>
-                    
+
                     <div className="flex flex-col md:flex-row items-center mb-12">
                         <div className="md:w-1/2 mb-8 md:mb-0">
                             <img src="https://placehold.co/500x300/2563eb/FFFFFF?text=About+Fonet" alt="About Fonet" className="rounded-lg shadow-md" />
@@ -97,7 +103,7 @@ import { FormEvent} from 'react';
             <section id="services" className="py-16 bg-gray-100">
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl font-bold text-center text-[#2563eb] mb-12">Our Services</h2>
-                    
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         {/* Service Card */}
                         <div className="bg-white rounded-lg shadow-md overflow-hidden service-card transition-all duration-300">
@@ -168,26 +174,26 @@ import { FormEvent} from 'react';
                     {/* Typing Services */}
                     <div className="mt-16 bg-white p-8 rounded-lg shadow">
                         <h3 className="text-2xl font-semibold text-[#2563eb] mb-6">Typing Services</h3>
-                        
+
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
                                 <h4 className="text-xl font-medium text-[#1e40af] mb-4">Academic Typing</h4>
                                 <p className="text-gray-700 mb-4">
                                     Our specialists ensure accurate typing with correct academic format and structure. All work is conducted by qualified staff in your field of study.
                                 </p>
-                                
+
                                 <h4 className="text-xl font-medium text-[#1e40af] mb-4">Thesis Typing Services</h4>
                                 <p className="text-gray-700">
                                     We provide professional thesis typing with high accuracy, proper formatting, and quick turnaround time. Our experts understand academic requirements.
                                 </p>
                             </div>
-                            
+
                             <div>
                                 <h4 className="text-xl font-medium text-[#1e40af] mb-4">Document Typing Services</h4>
                                 <p className="text-gray-700 mb-4">
                                     We handle all forms of documents from business plans to forms and templates, always following your specific requirements.
                                 </p>
-                                
+
                                 <h4 className="text-xl font-medium text-[#1e40af] mb-4">Editing Services</h4>
                                 <p className="text-gray-700">
                                     Our editors polish existing documents to ensure they are error-free and properly formatted for your needs.
@@ -202,7 +208,7 @@ import { FormEvent} from 'react';
             <section id="notice" className="py-16 bg-white">
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl font-bold text-center text-[#2563eb] mb-12">Notice</h2>
-                    
+
                     <div className="bg-blue-50 p-6 rounded-lg shadow-md max-w-3xl mx-auto">
                         <div className="flex items-start mb-4">
                             <div className="bg-[#2563eb] text-white p-3 rounded-full mr-4">
@@ -218,7 +224,7 @@ import { FormEvent} from 'react';
                         </p>
                         <a href="#" className="text-[#2563eb] hover:underline font-medium">Read more →</a>
                     </div>
-                    
+
                     <div className="mt-8 bg-blue-50 p-6 rounded-lg shadow-md max-w-3xl mx-auto">
                         <div className="flex items-start mb-4">
                             <div className="bg-[#2563eb] text-white p-3 rounded-full mr-4">
@@ -241,7 +247,7 @@ import { FormEvent} from 'react';
             <section id="gallery" className="py-16 bg-gray-100">
                 <div className="container mx-auto px-4">
                     <h2 className="text-3xl font-bold text-center text-[#2563eb] mb-12">Gallery</h2>
-                    
+
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         <div className="overflow-hidden rounded-lg shadow-md">
                             <img src="https://placehold.co/400x300/2563eb/FFFFFF?text=Printing+Work" alt="Gallery Image 1" className="w-full h-48 object-cover hover:scale-105 transition duration-300" />
@@ -272,96 +278,98 @@ import { FormEvent} from 'react';
             </section>
 
             {/* Contact Section */}
-           <section id="contact" className="py-16 bg-white">
-            <div className="container mx-auto px-4">
-                <h2 className="text-3xl font-bold text-center text-[#2563eb] mb-12">Contact Us</h2>
+            <section id="contact" className="py-16 bg-white">
+                <div className="container mx-auto px-4">
+                    <h2 className="text-3xl font-bold text-center text-[#2563eb] mb-12">Contact Us</h2>
 
-                <div className="flex flex-col md:flex-row gap-8">
-                    <div className="md:w-1/2">
-                        <form onSubmit={handleSubmit} className="bg-gray-50 p-6 rounded-lg shadow-md">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="block text-gray-700 mb-2">First Name *</label>
-              <input 
-                type="text" 
-                value={data.first_name}
-                onChange={e => setData('first_name', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
-                required
-              />
-              {errors.first_name && <p className="text-red-500 text-sm mt-1">{errors.first_name}</p>}
-            </div>
-            <div>
-              <label className="block text-gray-700 mb-2">Last Name *</label>
-              <input 
-                type="text" 
-                value={data.last_name}
-                onChange={e => setData('last_name', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
-              />
-              {errors.last_name && <p className="text-red-500 text-sm mt-1">{errors.last_name}</p>}
-            </div>
-          </div>
+                    <div className="flex flex-col md:flex-row gap-8">
+                        <div className="md:w-1/2">
+                            {flash.success && (
+                                <div className="flex justify-center bg-green-500 text-white px-4 py-2 rounded-md mb-4">
+                                    {flash.success}
+                                </div>
+                            )}
+                            {flash.error && (
+                                <div className="flex justify-center bg-red-500 text-white px-4 py-2 rounded-md mb-4">
+                                    {flash.error}
+                                </div>
+                            )}
 
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Phone No *</label>
-            <input 
-              type="tel" 
-              value={data.phone}
-              onChange={e => setData('phone', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            />
-            {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
-          </div>
+                            <form onSubmit={handleSubmit} className="bg-gray-50 p-6 rounded-lg shadow-md space-y-4">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label className="block text-gray-700 mb-2">First Name *</label>
+                                        <input
+                                            type="text"
+                                            value={data.first_name}
+                                            onChange={e => setData('first_name', e.target.value)}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            required
+                                        />
+                                        {errors.first_name && <p className="text-red-500 text-sm mt-1">{errors.first_name}</p>}
+                                    </div>
+                                    <div>
+                                        <label className="block text-gray-700 mb-2">Last Name *</label>
+                                        <input
+                                            type="text"
+                                            value={data.last_name}
+                                            onChange={e => setData('last_name', e.target.value)}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                            required
+                                        />
+                                        {errors.last_name && <p className="text-red-500 text-sm mt-1">{errors.last_name}</p>}
+                                    </div>
+                                </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Email Address *</label>
-            <input 
-              type="email" 
-              value={data.email}
-              onChange={e => setData('email', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            />
-            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
-          </div>
+                                <div>
+                                    <label className="block text-gray-700 mb-2">Phone No *</label>
+                                    <input
+                                        type="tel"
+                                        value={data.phone}
+                                        onChange={e => setData('phone', e.target.value)}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        required
+                                    />
+                                    {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
+                                </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">File (Optional)</label>
-            <input 
-              type="file"
-              onChange={e => setData('file', e.target.files?.[0])}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md"
-            />
-            {errors.file && <p className="text-red-500 text-sm mt-1">{errors.file}</p>}
-          </div>
+                                <div>
+                                    <label className="block text-gray-700 mb-2">Email Address *</label>
+                                    <input
+                                        type="email"
+                                        value={data.email}
+                                        onChange={e => setData('email', e.target.value)}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        required
+                                    />
+                                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                                </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Message *</label>
-            <textarea 
-              rows={5} 
-              value={data.message}
-              onChange={e => setData('message', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              required
-            ></textarea>
-            {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
-          </div>
+                                <div>
+                                    <label className="block text-gray-700 mb-2">Message *</label>
+                                    <textarea
+                                        rows={5}
+                                        value={data.message}
+                                        onChange={e => setData('message', e.target.value)}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        required
+                                    ></textarea>
+                                    {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
+                                </div>
 
-          <button 
-            type="submit"
-            disabled={processing}
-            className="bg-[#2563eb] hover:bg-[#1e40af] disabled:bg-gray-400 text-white font-bold py-2 px-6 rounded-md transition duration-300"
-          >
-            {processing ? 'Sending...' : 'Send Message'}
-          </button>
-        </form>
+                                <button
+                                    type="submit"
+                                    disabled={processing}
+                                    className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-bold py-2 px-6 rounded-md transition duration-300"
+                                >
+                                    {processing ? 'Sending...' : 'Send Message'}
+                                </button>
+                            </form>
+                        </div>
                     </div>
+
                 </div>
-            </div>
-        </section>
-    </Applayout>
-  )
+            </section>
+        </Applayout>
+    )
 }

@@ -6,7 +6,7 @@ use App\Http\Controllers\ContactController;
 
 
 
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+Route::resource('/contacts', ContactController::class);
 
 
 Route::get('/', function () {
