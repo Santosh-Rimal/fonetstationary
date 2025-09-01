@@ -3,7 +3,7 @@ import { Head, useForm } from '@inertiajs/react';
 import { FormEvent } from 'react';
 import { usePage } from '@inertiajs/react'
 
-import { store } from '@/actions/App/Http/Controllers/ContactController'
+import contacts from '@/routes/contacts';
 import InputError from '@/components/input-error';
 
 export default function Home() {
@@ -26,7 +26,7 @@ export default function Home() {
     });
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post(store.url(), {
+        post(contacts.store.url(), {
             onSuccess: () => reset(),
             preserveScroll: true,
 
@@ -369,10 +369,12 @@ export default function Home() {
                                     <label className="block text-gray-700 font-medium mb-2">File (Optional)</label>
                                     <input
                                         type="file"
+                                        name="file"
+                                        onChange={(e) => setData("file", e.target.files ? e.target.files[0] : null)}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-transparent"
                                     />
                                 </div>
- 
+
                                 <div className="mb-6">
                                     <label className="block text-gray-700 font-medium mb-2">Message</label>
                                     <textarea

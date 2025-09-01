@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import { Link, Head } from '@inertiajs/react';
 import { PropsWithChildren } from 'react';
 
+import { index } from '@/actions/App/Http/Controllers/ContactController'
+
+
 export default function Layout({ children }: PropsWithChildren) {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -90,7 +93,7 @@ export default function Layout({ children }: PropsWithChildren) {
               </div>
               <a href="#notice" className="py-3 px-6 text-white hover:bg-[#2563eb]">Notice</a>
               <a href="#gallery" className="py-3 px-6 text-white hover:bg-[#2563eb]">Gallery</a>
-              <a href="#contact" className="py-3 px-6 text-white hover:bg-[#2563eb]">Contact Us</a>
+              <Link href="#contact" className="py-3 px-6 text-white hover:bg-[#2563eb]">Contact Us</Link>
             </div>
           </div>
         </nav>

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use App\Models\Contact;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ContactController extends Controller
 {
@@ -13,7 +15,9 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+      $contacts=  Contact::get();
+    //   dd($contacts);
+       return Inertia::render('server-side/contact',['contacts'=>$contacts]);
     }
 
     /**
@@ -32,7 +36,8 @@ class ContactController extends Controller
         $validated = $request->validated();
         
        if ($request->hasFile('file')) {
-       $validated['file'] = $request->file('file')->store('contact_files', 'public');
+      $files = $request->file('file')->store('contact_files', 'public');
+       $validated['file']=Storage::url($files);
        }
 
        Contact::create($validated);
@@ -69,6 +74,6 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        dd("Helli");
     }
 }

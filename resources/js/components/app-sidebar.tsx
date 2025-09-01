@@ -3,10 +3,11 @@ import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
-import { type NavItem } from '@/types';
+import { NavGroup, type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { BookOpen, ContactRound, Folder, LayoutGrid } from 'lucide-react';
 import AppLogo from './app-logo';
+import contacts from '@/routes/contacts';
 
 const mainNavItems: NavItem[] = [
     {
@@ -14,7 +15,25 @@ const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
     },
+    {
+        title: 'Contacts',
+        href: contacts.index.url(),
+        icon: ContactRound,
+    },
 ];
+
+const secondItems: NavGroup[] = [
+    // {
+    //     title: 'Resources',
+    //     items: [
+    //         {
+    //             title: 'Repository',
+    //             href: 'hello',
+    //             icon: Folder,
+    //         },
+    //     ]
+    // }
+]
 
 const footerNavItems: NavItem[] = [
     {
@@ -45,7 +64,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain items={mainNavItems} secondItems={secondItems} />
             </SidebarContent>
 
             <SidebarFooter>
