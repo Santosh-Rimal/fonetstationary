@@ -6,7 +6,7 @@ use App\Http\Controllers\ContactController;
 
 
 
-Route::resource('/contacts', ContactController::class);
+Route::resource('/contacts', ContactController::class)->except('store');
 
 
 Route::get('/', function () {
@@ -21,3 +21,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 require __DIR__.'/settings.php';
 require __DIR__.'/auth.php';
+require __DIR__.'/frontend.php';

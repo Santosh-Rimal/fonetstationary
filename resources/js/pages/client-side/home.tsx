@@ -4,7 +4,7 @@ import { FormEvent } from 'react';
 import { usePage } from '@inertiajs/react'
 import contacts from '@/routes/contacts';
 import InputError from '@/components/input-error';
-// home
+
 export default function Home() {
     const { flash } = usePage<{ flash: { success?: string; error?: string } }>().props
     console.log(flash)
@@ -73,7 +73,7 @@ export default function Home() {
                             <img src="https://placehold.co/500x300/2563eb/FFFFFF?text=About+Fonet" alt="About Fonet" className="rounded-lg shadow-md" />
                         </div>
                         <div className="md:w-1/2 md:pl-12">
-                            <h3 className="text-2xl font-semibold text-[[#2563eb]] mb-4">Welcome to Fonet Stationary Center</h3>
+                            <h3 className="text-2xl font-semibold text-[#2563eb] mb-4">Welcome to Fonet Stationary Center</h3>
                             <p className="text-gray-700 mb-4">
                                 Fonet Stationary Center (FCI) is located at central location of Bharatpur, in front of Saptagandaki Campus. We are here to cater you all required services for Computer such as typing, printing, photocopy and other related tasks.
                             </p>
