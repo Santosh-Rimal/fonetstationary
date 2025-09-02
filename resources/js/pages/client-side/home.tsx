@@ -2,10 +2,9 @@ import Applayout from '@/layouts/client-side/appLayout';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEvent } from 'react';
 import { usePage } from '@inertiajs/react'
-
 import contacts from '@/routes/contacts';
 import InputError from '@/components/input-error';
-
+// home
 export default function Home() {
     const { flash } = usePage<{ flash: { success?: string; error?: string } }>().props
     console.log(flash)
@@ -434,7 +433,6 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-
         </Applayout>
     )
 }
