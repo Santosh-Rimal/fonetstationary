@@ -75,6 +75,12 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        dd("Helli");
+        // dd($contact);
+        if($contact->file){
+           $filePath = str_replace('/storage/', '', $contact->file);
+           Storage::disk('public')->delete($filePath);
+        }
+        $contact->delete();
+        return redirect()->route('contacts.index')->with('success','Contact Deleted Successfully');
     }
 }

@@ -1,8 +1,8 @@
 
 import AppLayout from '@/layouts/app-layout';
-import contacts from '@/routes/contacts';
+import { index, destroy } from '@/routes/contacts';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import {
     Table,
     TableBody,
@@ -13,11 +13,12 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import { Trash } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Contacts',
-        href: contacts.index.url(),
+        href: index.url(),
     },
 ];
 interface contact {
@@ -29,14 +30,33 @@ interface contact {
     phone: string,
     file: string
 }
+interface Flash {
+    success?: string,
+    error?: string
+}
 export default function Contacts({ contacts = [] }: { contacts: contact[] }) {
-    const handleDelete = (id: number) => {
-        console.log(id)
-    }
+    const { flash } = usePage<{ flash: Flash }>().props;
+    // const { flash } = usePage<{ flash: { success?: string; error?: string } }>().props
+    console.log(flash)
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Contacts" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+                {
+                    flash.success && (
+                        <Alert
+                            className={`flex justify-center px-4 py-2 rounded-md mb-4 shadow-md 
+              ${flash?.success
+                                    ? 'bg-green-500 animate-pulse'
+                                    : 'bg-red-500 animate-bounce'}`}
+                        >
+                            <AlertDescription className="text-white">
+                                {flash?.success || flash?.error}
+                            </AlertDescription>
+                        </Alert>
+
+                    )
+                }
                 <Table className='border rounded'>
                     <TableCaption>All Contact Details</TableCaption>
                     <TableHeader>
@@ -86,7 +106,13 @@ export default function Contacts({ contacts = [] }: { contacts: contact[] }) {
                                     </TableCell>
 
                                     <TableCell className="text-right">
-                                        <button onClick={() => handleDelete(contact.id)} className='text-red-600 hover:cursor-pointer'>
+                                        <button onClick={() => {
+                                            if (confirm('Are you Sure to Delete')) {
+                                                (router.delete(destroy(contact.id)), {
+                                                    preserveScroll: true,
+                                                });
+                                            }
+                                        }} className='text-red-600 hover:cursor-pointer'>
                                             <Trash />
                                         </button>
                                     </TableCell>

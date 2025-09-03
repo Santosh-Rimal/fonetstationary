@@ -19,7 +19,7 @@ export default function Home() {
     // }, [flashmessage]);
 
     console.log(flash)
-    const { data, setData, post, processing, errors, reset, } = useForm<{
+    const { data, setData, post, processing, errors, reset } = useForm<{
         first_name: string;
         last_name: string;
         email: string;

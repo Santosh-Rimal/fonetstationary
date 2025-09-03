@@ -7,7 +7,7 @@ import { NavGroup, type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { BookOpen, ContactRound, Folder, LayoutGrid, Settings2 } from 'lucide-react';
 import AppLogo from './app-logo';
-import contacts from '@/routes/contacts';
+import { index as contactsIndex } from '@/routes/contacts';
 import { index } from '@/routes/services';
 
 const mainNavItems: NavItem[] = [
@@ -18,7 +18,7 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Contacts',
-        href: contacts.index.url(),
+        href: contactsIndex(),
         icon: ContactRound,
     },
 
