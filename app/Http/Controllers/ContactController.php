@@ -33,6 +33,7 @@ class ContactController extends Controller
      */
     public function store(StoreContactRequest $request)
     {
+        // dd($request->all());
         $validated = $request->validated();
         
        if ($request->hasFile('file')) {

@@ -1,12 +1,23 @@
 import Applayout from '@/layouts/client-side/appLayout';
 import { Head, useForm } from '@inertiajs/react';
-import { FormEvent } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { usePage } from '@inertiajs/react'
-import contacts from '@/routes/contacts';
+import { store } from '@/routes/contact-us';
 import InputError from '@/components/input-error';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export default function Home() {
     const { flash } = usePage<{ flash: { success?: string; error?: string } }>().props
+    const flashmessage = flash?.success || flash?.error;
+    const [visibleFlash, setVisibleFlash] = useState(flashmessage ? true : false);
+
+    // useEffect(() => {
+    //     if (flashmessage) {
+    //         const timer = setTimeout(() => setVisibleFlash(false), 4000);
+    //         return () => clearTimeout(timer);
+    //     }
+    // }, [flashmessage]);
+
     console.log(flash)
     const { data, setData, post, processing, errors, reset, } = useForm<{
         first_name: string;
@@ -25,12 +36,20 @@ export default function Home() {
     });
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        post(contacts.store.url(), {
+        post(store.url(), {
             onSuccess: () => reset(),
             preserveScroll: true,
 
         });
     }
+
+    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+        if (e.target.files && e.target.files.length > 0) {
+            const file = e.target.files[0];
+            setData('file', file);
+        }
+    };
     return (
         <Applayout>
             <Head title="Home" />
@@ -306,8 +325,18 @@ export default function Home() {
 
                     <div className="flex flex-col md:flex-row gap-10">
                         {/* Contact Form */}
+
+
                         <div className="md:w-1/2">
-                            {flash.success && (
+
+                            {visibleFlash &&
+                                < Alert className={`${flash?.success ? 'flex justify-center bg-green-500 text-white px-4 py-2 rounded-md mb-4 shadow-md animate-pulse' : 'flex justify-center bg-red-500 text-white px-4 py-2 rounded-md mb-4 shadow-md animate-bounce'}`}>
+                                    <AlertDescription className='text-white'>
+                                        {flashmessage}
+                                    </AlertDescription>
+                                </Alert>
+                            }
+                            {/* {flash.success && (
                                 <div className="flex justify-center bg-green-500 text-white px-4 py-2 rounded-md mb-4 shadow-md animate-pulse">
                                     {flash.success}
                                 </div>
@@ -316,7 +345,7 @@ export default function Home() {
                                 <div className="flex justify-center bg-red-500 text-white px-4 py-2 rounded-md mb-4 shadow-md animate-bounce">
                                     {flash.error}
                                 </div>
-                            )}
+                            )} */}
 
                             <form onSubmit={handleSubmit} className="bg-white/80 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-gray-200">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -369,7 +398,7 @@ export default function Home() {
                                     <input
                                         type="file"
                                         name="file"
-                                        onChange={(e) => setData("file", e.target.files ? e.target.files[0] : null)}
+                                        onChange={handleFileUpload}
                                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-transparent"
                                     />
                                 </div>
@@ -381,7 +410,7 @@ export default function Home() {
                                         rows={5}
                                         value={data.message}
                                         onChange={(e) => setData("message", e.target.value)}
-                                        className="`(errors.message && border-red-600)`w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-transparent"
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563eb] focus:border-transparent"
                                     ></textarea>
                                     <InputError message={errors.message} className="mt-2" />
                                     {/* {errors.message && <div className="text-red-500 mt-2">{errors.message}</div>} */}
@@ -433,6 +462,6 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-        </Applayout>
+        </Applayout >
     )
 }
