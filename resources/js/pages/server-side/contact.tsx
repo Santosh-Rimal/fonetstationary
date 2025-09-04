@@ -57,6 +57,7 @@ export default function Contacts({ contacts = [] }: { contacts: contact[] }) {
 
                     )
                 }
+
                 <Table className='border rounded'>
                     <TableCaption>All Contact Details</TableCaption>
                     <TableHeader>
@@ -71,9 +72,8 @@ export default function Contacts({ contacts = [] }: { contacts: contact[] }) {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-
-                        {
-                            contacts && contacts.map((contact, index) => (
+                        {contacts && contacts.length > 0 ? (
+                            contacts.map((contact, index) => (
                                 <TableRow key={index}>
                                     <TableCell className="font-medium">{index + 1}</TableCell>
                                     <TableCell>{contact.first_name + ' ' + contact.last_name}</TableCell>
@@ -104,23 +104,34 @@ export default function Contacts({ contacts = [] }: { contacts: contact[] }) {
                                             <span className="text-gray-500">No file</span>
                                         )}
                                     </TableCell>
-
                                     <TableCell className="text-right">
-                                        <button onClick={() => {
-                                            if (confirm('Are you Sure to Delete')) {
-                                                (router.delete(destroy(contact.id)), {
-                                                    preserveScroll: true,
-                                                });
-                                            }
-                                        }} className='text-red-600 hover:cursor-pointer'>
+                                        <button
+                                            onClick={() => {
+                                                if (confirm('Are you Sure to Delete')) {
+                                                    router.delete(destroy(contact.id), {
+                                                        preserveScroll: true,
+                                                    });
+                                                }
+                                            }}
+                                            className="text-red-600 hover:cursor-pointer"
+                                        >
                                             <Trash />
                                         </button>
                                     </TableCell>
                                 </TableRow>
                             ))
-                        }
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={7} className="text-center text-gray-500 py-6">
+                                    No contacts available
+                                </TableCell>
+                            </TableRow>
+                        )}
                     </TableBody>
+
                 </Table>
+
+
             </div>
         </AppLayout>
     );
