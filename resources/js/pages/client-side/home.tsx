@@ -9,7 +9,7 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 export default function Home() {
     const { flash } = usePage<{ flash: { success?: string; error?: string } }>().props
     const flashmessage = flash?.success || flash?.error;
-    const [visibleFlash, setVisibleFlash] = useState(flashmessage ? true : false);
+    // const [visibleFlash, setVisibleFlash] = useState(flashmessage ? true : false);
 
     // useEffect(() => {
     //     if (flashmessage) {
@@ -329,7 +329,7 @@ export default function Home() {
 
                         <div className="md:w-1/2">
 
-                            {visibleFlash &&
+                            {flashmessage &&
                                 < Alert className={`${flash?.success ? 'flex justify-center bg-green-500 text-white px-4 py-2 rounded-md mb-4 shadow-md animate-pulse' : 'flex justify-center bg-red-500 text-white px-4 py-2 rounded-md mb-4 shadow-md animate-bounce'}`}>
                                     <AlertDescription className='text-white'>
                                         {flashmessage}

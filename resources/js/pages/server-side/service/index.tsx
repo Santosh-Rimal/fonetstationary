@@ -1,9 +1,10 @@
 
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import { router } from '@inertiajs/react';
 import services from '@/routes/services';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
     Table,
     TableBody,
@@ -31,13 +32,34 @@ interface service {
     'description': string;
 
 }
+interface Flash {
+    error?: string,
+    success?: string
+}
 export default function Services({ allservices = [] }: { allservices: service[] }) {
+
+    const { flash } = usePage<{ flash: Flash }>().props;
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Services" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <Link className='bg-blue-400 w-fit p-2 rounded' href={services.create.url()}>Create Service</Link>
+                {
+                    flash?.success && (
+                        <Alert
+                            className={`flex justify-center px-4 py-2 rounded-md mb-4 shadow-md 
+              ${flash?.success
+                                    ? 'bg-green-500 animate-pulse'
+                                    : 'bg-red-500 animate-bounce'}`}
+                        >
+                            <AlertDescription className="text-white">
+                                {flash?.success || flash?.error}
+                            </AlertDescription>
+                        </Alert>
+
+                    )
+                }
                 <Table className='border rounded'>
                     <TableCaption>All Services Details</TableCaption>
                     <TableHeader>
