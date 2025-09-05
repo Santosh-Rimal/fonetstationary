@@ -14,7 +14,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Edit, Trash, View } from 'lucide-react';
+import { Edit, EyeIcon, Trash, View } from 'lucide-react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -36,8 +36,8 @@ interface Flash {
     error?: string,
     success?: string
 }
-export default function Services({ allservices = [] }: { allservices: service[] }) {
-
+export default function Services({ ...props }: { allservices: service[] }) {
+    const { allservices } = props;
     const { flash } = usePage<{ flash: Flash }>().props;
 
     return (
@@ -100,11 +100,11 @@ export default function Services({ allservices = [] }: { allservices: service[] 
                                     }} className="text-red-600 hover:cursor-pointer">
                                         <Trash />
                                     </button>
-                                    <button className="text-blue-600 hover:cursor-pointer">
+                                    <button onClick={() => { router.get(services.edit.url(service.id)) }} className="text-blue-600 hover:cursor-pointer">
                                         <Edit />
                                     </button>
-                                    <button className="text-green-600 hover:cursor-pointer">
-                                        <View />
+                                    <button onClick={() => { router.get(services.show.url(service.id)) }} className="text-green-600 hover:cursor-pointer">
+                                        <EyeIcon />
                                     </button>
                                 </TableCell>
                             </TableRow>

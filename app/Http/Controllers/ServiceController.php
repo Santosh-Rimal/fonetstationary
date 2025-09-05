@@ -52,7 +52,8 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
-        //
+        // dd("Hello");
+        return Inertia::render('server-side/service/create',['service'=>$service,'isShow'=>true]);
     }
 
     /**
@@ -60,7 +61,7 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
-        //
+        return Inertia::render('server-side/service/create',['service'=>$service,'isEdit'=>true]);
     }
 
     /**
@@ -68,7 +69,8 @@ class ServiceController extends Controller
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
-        //
+        dd($request->all(),$service);
+        $validated = $request->validated();
     }
 
     /**
