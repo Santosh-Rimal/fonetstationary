@@ -22,6 +22,7 @@ export default function Notices() {
         title: '',
         description: '',
         notice_image: null as File | null,
+        is_active: false,
     });
     const handelSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
