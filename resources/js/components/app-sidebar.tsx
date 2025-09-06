@@ -5,10 +5,12 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import { dashboard } from '@/routes';
 import { NavGroup, type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, ContactRound, Folder, LayoutGrid, MessageCircle, Settings2, SettingsIcon } from 'lucide-react';
+import { BookOpen, ContactRound, Folder,  Image, LayoutGrid, MessageCircle, Settings2, SettingsIcon } from 'lucide-react';
 import AppLogo from './app-logo';
 import { index as contactsIndex } from '@/routes/contacts';
 import { index } from '@/routes/services';
+import { index as noticeIndex } from '@/routes/notices';
+import { index as galleryIndex } from '@/routes/galleries';
 
 const mainNavItems: NavItem[] = [
     {
@@ -29,8 +31,13 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Notices',
-        href: index(),
+        href: noticeIndex(),
         icon: MessageCircle,
+    },
+    {
+        title: 'Gallery',
+        href: galleryIndex(),
+        icon: Image,
     },
 ];
 
