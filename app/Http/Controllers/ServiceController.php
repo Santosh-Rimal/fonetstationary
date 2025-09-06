@@ -24,7 +24,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
-       return Inertia::render('server-side/service/create');
+       return Inertia::render('server-side/service/service-form');
     }
 
     /**
@@ -53,7 +53,7 @@ class ServiceController extends Controller
     public function show(Service $service)
     {
         // dd("Hello");
-        return Inertia::render('server-side/service/create',['service'=>$service,'isShow'=>true]);
+        return Inertia::render('server-side/service/service-form',['service'=>$service,'isShow'=>true]);
     }
 
     /**
@@ -61,7 +61,7 @@ class ServiceController extends Controller
      */
     public function edit(Service $service)
     {
-        return Inertia::render('server-side/service/create',['service'=>$service,'isEdit'=>true]);
+        return Inertia::render('server-side/service/service-form',['service'=>$service,'isEdit'=>true]);
     }
 
     /**
