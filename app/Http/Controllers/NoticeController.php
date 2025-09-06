@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Notice;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreNoticeRequest;
 use App\Http\Requests\UpdateNoticeRequest;
 
@@ -14,7 +15,8 @@ class NoticeController extends Controller
      */
     public function index()
     {
-        return Inertia::render('server-side/notice/index');
+        $notices=Notice::get();
+        return Inertia::render('server-side/notice/index',['notices'=>$notices]);
     }
 
     /**
@@ -30,7 +32,16 @@ class NoticeController extends Controller
      */
     public function store(StoreNoticeRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        if ($request->hasFile('notice_image')) {
+            $imagePath = $request->file('notice_image')->store('notices', 'public');
+            $data['notice_image'] = Storage::url($imagePath);
+        }
+
+        Notice::create($data);
+
+        return to_route('notices.index')->with('success', 'Notice created successfully.');
     }
 
     /**
@@ -38,7 +49,7 @@ class NoticeController extends Controller
      */
     public function show(Notice $notice)
     {
-        //
+        return Inertia::render('server-side/notice/notice-form',['notice'=>$notice,'isShow'=>true]);
     }
 
     /**
@@ -62,6 +73,11 @@ class NoticeController extends Controller
      */
     public function destroy(Notice $notice)
     {
-        //
+        if($notice->notice_image){
+            $imagePath = str_replace('/storage/', '', $notice->notice_image);
+            Storage::disk('public')->delete($imagePath);
+        }
+        $notice->delete();
+        return to_route('notices.index')->with('success', 'Notice deleted successfully.');
     }
 }
