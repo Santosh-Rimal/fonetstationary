@@ -6,17 +6,7 @@ import { Head, router, useForm } from '@inertiajs/react';
 import { ChangeEvent, FormEvent, useState } from 'react';
 
 
-interface Service {
-    id: number,
-    name: string;
-    price: number;
-    offer_price: number;
-    service_image: File | null;
-    discount: number;
-    description: string;
-}
-
-export default function Services({ ...props }: { service: Service, isShow: boolean, isEdit: boolean }) {
+export default function Services({ ...props }) {
     const { service, isShow, isEdit } = props;
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -29,18 +19,20 @@ export default function Services({ ...props }: { service: Service, isShow: boole
 
 
     // console.log(service.service_image)
-    const { data, setData, post, processing, errors, reset, put } = useForm({
+    const { data, setData, post, processing,errors, reset } = useForm({
         name: service?.name || '',
         price: service?.price || 0,
         offer_price: service?.offer_price || 0,
         service_image: null as File | null,
         discount: service?.discount || 0,
-        description: service?.description || ''
+        description: service?.description || '',
+        _method: isEdit ? 'PUT' : 'POST',
     });
     const handelSubmit = (e: React.FormEvent<HTMLElement>) => {
         e.preventDefault();
         if (isEdit) {
-            put(services.update.url(service.id), {
+            post(services.update.url(service.id), {
+                forceFormData: true,
                 onSuccess: () => reset(),
                 preserveScroll: true,
             });
@@ -132,19 +124,17 @@ export default function Services({ ...props }: { service: Service, isShow: boole
                         )}
 
                         {/* Existing image: show if editing and service has an image */}
-                        {service?.service_image && (
-                            <img
-                                src={`http://127.0.0.1:8000${service.service_image}`}
-                                alt={service.name}
-                                className="w-32 h-32 object-cover rounded-md border mt-2"
-                            />
-                        )}
-                        {tempImage &&
-                            <img
+
+                        {tempImage ?
+                            (<img
                                 src={tempImage}
                                 alt="Preview"
                                 className="w-32 h-32 object-cover rounded-md border mt-2"
-                            />}
+                            />) : service?.service_image ? (<img
+                                src={`http://127.0.0.1:8000${service.service_image}`}
+                                alt={service.name}
+                                className="w-32 h-32 object-cover rounded-md border mt-2"
+                            />) : ''}
                         {/* Error message */}
                         <InputError message={errors.service_image} />
                     </div>

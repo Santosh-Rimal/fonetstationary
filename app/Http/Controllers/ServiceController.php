@@ -69,8 +69,27 @@ class ServiceController extends Controller
      */
     public function update(UpdateServiceRequest $request, Service $service)
     {
-        dd($request->all(),$service);
-        $validated = $request->validated();
+        $validated = $request->all();
+        
+        // dd($validated);
+        if ($request->hasFile('service_image')) {
+        // Delete old image if exists
+        if ($service->service_image) {
+        $oldPath = str_replace('/storage/', '', $service->service_image);
+        Storage::disk('public')->delete($oldPath);
+        }
+
+        // Store new image
+        $file = $request->file('service_image')->store('services_images', 'public');
+        $validated['service_image'] = Storage::url($file);
+        } else {
+        // keep old image if not updating
+        $validated['service_image'] = $service->service_image;
+        }
+
+        $service->update($validated);
+
+        return redirect()->route('services.index')->with('success', 'Service Updated Successfully!');
     }
 
     /**
