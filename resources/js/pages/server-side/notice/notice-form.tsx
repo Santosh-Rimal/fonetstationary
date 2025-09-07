@@ -38,11 +38,13 @@ export default function Notices({ ...props }) {
                 forceFormData: true,
                 onSuccess: () => reset(),
             });
+        } else {
+
+            post(notices.store.url(), {
+                onSuccess: () => reset(),
+                preserveScroll: true,
+            });
         }
-        post(notices.store.url(), {
-            onSuccess: () => reset(),
-            preserveScroll: true,
-        });
     }
 
     const handelFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {

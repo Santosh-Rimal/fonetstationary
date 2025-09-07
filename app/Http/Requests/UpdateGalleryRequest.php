@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateNoticeRequest extends FormRequest
+class UpdateGalleryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,9 @@ class UpdateNoticeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'notice_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'is_active' => 'required|boolean',
+            'title'=>'required|string|max:255',
+            'description'=>'nullable|string',
+            'gallery_image'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

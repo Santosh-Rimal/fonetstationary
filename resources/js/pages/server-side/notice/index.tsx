@@ -69,7 +69,7 @@ export default function Notices({ ...props }: { notices: notice[] }) {
                     <TableBody>
                         {notices && notices.length > 0 ? notices.map((notice, index: number) => (
                             <TableRow key={index}>
-                                <TableCell className="font-medium">{index}</TableCell>
+                                <TableCell className="font-medium">{index + 1}</TableCell>
                                 <TableCell>{notice.title}</TableCell>
                                 <TableCell>{notice.description}</TableCell>
                                 <TableCell>

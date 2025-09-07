@@ -57,7 +57,7 @@ class NoticeController extends Controller
      */
     public function edit(Notice $notice)
     {
-        //
+        return Inertia::render('server-side/notice/notice-form',['notice'=>$notice,'isEdit'=>true]);
     }
 
     /**
@@ -65,7 +65,24 @@ class NoticeController extends Controller
      */
     public function update(UpdateNoticeRequest $request, Notice $notice)
     {
-        //
+        $data = $request->validated();
+        if ($request->hasFile('notice_image')) {
+            // Delete the old image if it exists
+            if ($notice->notice_image) {
+                $oldImagePath = str_replace('/storage/', '', $notice->notice_image);
+                Storage::disk('public')->delete($oldImagePath);
+            }
+
+            $imagePath = $request->file('notice_image')->store('notices', 'public');
+            $data['notice_image'] = Storage::url($imagePath);
+        }else{
+            // If no new image is uploaded, retain the old image path
+            $data['notice_image'] = $notice->notice_image;
+        }
+// dd($data);
+        $notice->update($data);
+
+        return to_route('notices.index')->with('success', 'Notice updated successfully.');
     }
 
     /**

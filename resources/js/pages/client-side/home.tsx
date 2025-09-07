@@ -6,7 +6,33 @@ import { store } from '@/routes/contact-us';
 import InputError from '@/components/input-error';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
-export default function Home() {
+
+
+interface service {
+    id: number;
+    name: string;
+    description: string;
+    service_image: string;
+    price: number;
+    offer_price: number;
+    discount: number;
+
+}
+interface Gallery {
+    id: number;
+    title: string
+    description: string
+    gallery_image: string
+}
+interface Notice {
+    id: number;
+    title: string;
+    description: string;
+    notice_image: string;
+    is_active: boolean;
+}
+export default function Home({ ...props }: { services: service[], galleries: Gallery[], notices: Notice[] }) {
+    const { services, galleries, notices } = props;
     const { flash } = usePage<{ flash: { success?: string; error?: string } }>().props
     const flashmessage = flash?.success || flash?.error;
     // const [visibleFlash, setVisibleFlash] = useState(flashmessage ? true : false);
@@ -104,30 +130,30 @@ export default function Home() {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div className="bg-blue-50 p-6 rounded-lg shadow">
-                            <div className="text-[[#2563eb]] text-4xl mb-4">
+                            <div className="text-[#2563eb] text-4xl mb-4">
                                 <i className="fas fa-history"></i>
                             </div>
-                            <h3 className="text-xl font-semibold text-[[#2563eb]] mb-3">History</h3>
+                            <h3 className="text-xl font-semibold text-[#2563eb] mb-3">History</h3>
                             <p className="text-gray-700">
                                 FCI was established in 2070 B.S. We have been providing quality services to the community for years, building trust and long-term relationships with our customers.
                             </p>
                         </div>
 
                         <div className="bg-blue-50 p-6 rounded-lg shadow">
-                            <div className="text-[[#2563eb]] text-4xl mb-4">
+                            <div className="text-[#2563eb] text-4xl mb-4">
                                 <i className="fas fa-bullseye"></i>
                             </div>
-                            <h3 className="text-xl font-semibold text-[[#2563eb]] mb-3">Mission</h3>
+                            <h3 className="text-xl font-semibold text-[#2563eb] mb-3">Mission</h3>
                             <p className="text-gray-700">
                                 Our mission is to establish a standard business services center that makes available a wide range of services and products at affordable prices to our customers.
                             </p>
                         </div>
 
                         <div className="bg-blue-50 p-6 rounded-lg shadow">
-                            <div className="text-[[#2563eb]] text-4xl mb-4">
+                            <div className="text-[#2563eb] text-4xl mb-4">
                                 <i className="fas fa-eye"></i>
                             </div>
-                            <h3 className="text-xl font-semibold text-[[#2563eb]] mb-3">Vision</h3>
+                            <h3 className="text-xl font-semibold text-[#2563eb] mb-3">Vision</h3>
                             <p className="text-gray-700">
                                 Our vision is to build a business services center that will have active presence all over major locations, providing quality services to all our customers.
                             </p>
@@ -139,14 +165,26 @@ export default function Home() {
             {/* Services Section */}
             <section id="services" className="py-16 bg-gray-100">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-center text-[[#2563eb]] mb-12">Our Services</h2>
+                    <h2 className="text-3xl font-bold text-center text-[#2563eb] mb-12">Our Services</h2>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         {/* Service Card */}
-                        <div className="bg-white rounded-lg shadow-md overflow-hidden service-card transition-all duration-300">
+
+                        {
+                            services.length > 0 && services.map((service, index) => (
+                                <div className="bg-white rounded-lg shadow-md overflow-hidden service-card transition-all duration-300">
+                                    <img src={service?.service_image} alt={service?.name} className=" w-full h-48 object-cover" />
+                                    <div className="p-4">
+                                        <h3 className="text-xl font-semibold text-[#2563eb] mb-2">{service?.name}</h3>
+                                        <p className="text-gray-700">{service?.description}</p>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                        {/* <div className="bg-white rounded-lg shadow-md overflow-hidden service-card transition-all duration-300">
                             <img src="https://placehold.co/300x200/2563eb/FFFFFF?text=Photocopy" alt="Photocopy Service" className="w-full h-48 object-cover" />
                             <div className="p-4">
-                                <h3 className="text-xl font-semibold text-[[#2563eb]] mb-2">Photocopy Center</h3>
+                                <h3 className="text-xl font-semibold text-[#2563eb] mb-2">Photocopy Center</h3>
                                 <p className="text-gray-700">High quality photocopy services with various paper options.</p>
                             </div>
                         </div>
@@ -154,7 +192,7 @@ export default function Home() {
                         <div className="bg-white rounded-lg shadow-md overflow-hidden service-card transition-all duration-300">
                             <img src="https://placehold.co/300x200/2563eb/FFFFFF?text=T-Shirt" alt="T-Shirt Printing" className="w-full h-48 object-cover" />
                             <div className="p-4">
-                                <h3 className="text-xl font-semibold text-[[#2563eb]] mb-2">T-Shirt Print</h3>
+                                <h3 className="text-xl font-semibold text-[#2563eb] mb-2">T-Shirt Print</h3>
                                 <p className="text-gray-700">Custom t-shirt printing for events, teams, and personal use.</p>
                             </div>
                         </div>
@@ -162,7 +200,7 @@ export default function Home() {
                         <div className="bg-white rounded-lg shadow-md overflow-hidden service-card transition-all duration-300">
                             <img src="https://placehold.co/300x200/2563eb/FFFFFF?text=Cup+Print" alt="Cup Printing" className="w-full h-48 object-cover" />
                             <div className="p-4">
-                                <h3 className="text-xl font-semibold text-[[#2563eb]] mb-2">Cup/Plate Print</h3>
+                                <h3 className="text-xl font-semibold text-[#2563eb] mb-2">Cup/Plate Print</h3>
                                 <p className="text-gray-700">Custom printing on cups and plates for special occasions.</p>
                             </div>
                         </div>
@@ -170,7 +208,7 @@ export default function Home() {
                         <div className="bg-white rounded-lg shadow-md overflow-hidden service-card transition-all duration-300">
                             <img src="https://placehold.co/300x200/2563eb/FFFFFF?text=Photo+Print" alt="Photo Printing" className="w-full h-48 object-cover" />
                             <div className="p-4">
-                                <h3 className="text-xl font-semibold text-[[#2563eb]] mb-2">Photo & Stickers Print</h3>
+                                <h3 className="text-xl font-semibold text-[#2563eb] mb-2">Photo & Stickers Print</h3>
                                 <p className="text-gray-700">High quality photo printing and custom sticker creation.</p>
                             </div>
                         </div>
@@ -178,7 +216,7 @@ export default function Home() {
                         <div className="bg-white rounded-lg shadow-md overflow-hidden service-card transition-all duration-300">
                             <img src="https://placehold.co/300x200/2563eb/FFFFFF?text=Flex+Print" alt="Flex Printing" className="w-full h-48 object-cover" />
                             <div className="p-4">
-                                <h3 className="text-xl font-semibold text-[[#2563eb]] mb-2">Flex Print</h3>
+                                <h3 className="text-xl font-semibold text-[#2563eb] mb-2">Flex Print</h3>
                                 <p className="text-gray-700">Large format flex printing for banners and advertisements.</p>
                             </div>
                         </div>
@@ -186,7 +224,7 @@ export default function Home() {
                         <div className="bg-white rounded-lg shadow-md overflow-hidden service-card transition-all duration-300">
                             <img src="https://placehold.co/300x200/2563eb/FFFFFF?text=Lamination" alt="Lamination" className="w-full h-48 object-cover" />
                             <div className="p-4">
-                                <h3 className="text-xl font-semibold text-[[#2563eb]] mb-2">Lamination</h3>
+                                <h3 className="text-xl font-semibold text-[#2563eb] mb-2">Lamination</h3>
                                 <p className="text-gray-700">Document lamination services for protection and durability.</p>
                             </div>
                         </div>
@@ -194,7 +232,7 @@ export default function Home() {
                         <div className="bg-white rounded-lg shadow-md overflow-hidden service-card transition-all duration-300">
                             <img src="https://placehold.co/300x200/2563eb/FFFFFF?text=Visiting+Card" alt="Visiting Cards" className="w-full h-48 object-cover" />
                             <div className="p-4">
-                                <h3 className="text-xl font-semibold text-[[#2563eb]] mb-2">Visiting Card</h3>
+                                <h3 className="text-xl font-semibold text-[#2563eb] mb-2">Visiting Card</h3>
                                 <p className="text-gray-700">Professional visiting card design and printing services.</p>
                             </div>
                         </div>
@@ -202,15 +240,15 @@ export default function Home() {
                         <div className="bg-white rounded-lg shadow-md overflow-hidden service-card transition-all duration-300">
                             <img src="https://placehold.co/300x200/2563eb/FFFFFF?text=PVC+Card" alt="PVC Cards" className="w-full h-48 object-cover" />
                             <div className="p-4">
-                                <h3 className="text-xl font-semibold text-[[#2563eb]] mb-2">PVC Card</h3>
+                                <h3 className="text-xl font-semibold text-[#2563eb] mb-2">PVC Card</h3>
                                 <p className="text-gray-700">Durable PVC card printing for IDs, membership cards, etc.</p>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Typing Services */}
                     <div className="mt-16 bg-white p-8 rounded-lg shadow">
-                        <h3 className="text-2xl font-semibold text-[[#2563eb]] mb-6">Typing Services</h3>
+                        <h3 className="text-2xl font-semibold text-[#2563eb] mb-6">Typing Services</h3>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div>
@@ -244,72 +282,59 @@ export default function Home() {
             {/* Notice Section */}
             <section id="notice" className="py-16 bg-white">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-center text-[[#2563eb]] mb-12">Notice</h2>
+                    <h2 className="text-3xl font-bold text-center text-[#2563eb] mb-12">Notice</h2>
 
-                    <div className="bg-blue-50 p-6 rounded-lg shadow-md max-w-3xl mx-auto">
-                        <div className="flex items-start mb-4">
-                            <div className="bg-[[#2563eb]] text-white p-3 rounded-full mr-4">
-                                <i className="fas fa-bullhorn text-xl"></i>
+                    {
+                        notices.length > 0 && notices.map((notice, index) => (
+                            <div key={index} className="bg-blue-50 p-6 rounded-lg shadow-md max-w-3xl mx-auto">
+                                <div className="flex items-center mb-4">
+                                    <div className="bg-[#2563eb] text-white p-3 rounded-full mr-4">
+                                        <i className="fas fa-bullhorn text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 className="text-xl font-semibold text-[#2563eb]">{notice?.title}</h3>
+                                        <p className="text-gray-600">July 15, 2023</p>
+                                    </div>
+                                </div>
+                                <p className="text-gray-700 mb-4">
+                                    {notice?.description}
+                                </p>
+                                <a href="#" className="text-[#2563eb] hover:underline font-medium">Read more →</a>
                             </div>
-                            <div>
-                                <h3 className="text-xl font-semibold text-[[#2563eb]]">Important Announcement</h3>
-                                <p className="text-gray-600">July 15, 2023</p>
-                            </div>
-                        </div>
-                        <p className="text-gray-700 mb-4">
-                            We are pleased to announce that Fonet Stationary Center will now be offering extended services including T-shirt printing, cup printing, and PVC card services. Visit us to experience these new offerings!
-                        </p>
-                        <a href="#" className="text-[[#2563eb]] hover:underline font-medium">Read more →</a>
-                    </div>
+                        ))
+                    }
 
-                    <div className="mt-8 bg-blue-50 p-6 rounded-lg shadow-md max-w-3xl mx-auto">
-                        <div className="flex items-start mb-4">
-                            <div className="bg-[[#2563eb]] text-white p-3 rounded-full mr-4">
+                    {/* <div className="mt-8 bg-blue-50 p-6 rounded-lg shadow-md max-w-3xl mx-auto">
+                        <div className="flex items-center mb-4">
+                            <div className="bg-[#2563eb] text-white p-3 rounded-full mr-4">
                                 <i className="fas fa-info-circle text-xl"></i>
                             </div>
                             <div>
-                                <h3 className="text-xl font-semibold text-[[#2563eb]]">Holiday Notice</h3>
+                                <h3 className="text-xl font-semibold text-[#2563eb]">Holiday Notice</h3>
                                 <p className="text-gray-600">June 30, 2023</p>
                             </div>
                         </div>
                         <p className="text-gray-700 mb-4">
                             Please be informed that our center will remain closed on July 5th, 2023 due to a local holiday. We will resume our services on July 6th, 2023. Thank you for your understanding.
                         </p>
-                        <a href="#" className="text-[[#2563eb]] hover:underline font-medium">Read more →</a>
-                    </div>
+                        <a href="#" className="text-[#2563eb] hover:underline font-medium">Read more →</a>
+                    </div> */}
                 </div>
             </section>
 
             {/* Gallery Section */}
             <section id="gallery" className="py-16 bg-gray-100">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-center text-[[#2563eb]] mb-12">Gallery</h2>
+                    <h2 className="text-3xl font-bold text-center text-[#2563eb] mb-12">Gallery</h2>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        <div className="overflow-hidden rounded-lg shadow-md">
-                            <img src="https://placehold.co/400x300/2563eb/FFFFFF?text=Printing+Work" alt="Gallery Image 1" className="w-full h-48 object-cover hover:scale-105 transition duration-300" />
-                        </div>
-                        <div className="overflow-hidden rounded-lg shadow-md">
-                            <img src="https://placehold.co/400x300/2563eb/FFFFFF?text=Photocopy" alt="Gallery Image 2" className="w-full h-48 object-cover hover:scale-105 transition duration-300" />
-                        </div>
-                        <div className="overflow-hidden rounded-lg shadow-md">
-                            <img src="https://placehold.co/400x300/2563eb/FFFFFF?text=Binding" alt="Gallery Image 3" className="w-full h-48 object-cover hover:scale-105 transition duration-300" />
-                        </div>
-                        <div className="overflow-hidden rounded-lg shadow-md">
-                            <img src="https://placehold.co/400x300/2563eb/FFFFFF?text=T-Shirt+Print" alt="Gallery Image 4" className="w-full h-48 object-cover hover:scale-105 transition duration-300" />
-                        </div>
-                        <div className="overflow-hidden rounded-lg shadow-md">
-                            <img src="https://placehold.co/400x300/2563eb/FFFFFF?text=Visiting+Cards" alt="Gallery Image 5" className="w-full h-48 object-cover hover:scale-105 transition duration-300" />
-                        </div>
-                        <div className="overflow-hidden rounded-lg shadow-md">
-                            <img src="https://placehold.co/400x300/2563eb/FFFFFF?text=Thesis+Work" alt="Gallery Image 6" className="w-full h-48 object-cover hover:scale-105 transition duration-300" />
-                        </div>
-                        <div className="overflow-hidden rounded-lg shadow-md">
-                            <img src="https://placehold.co/400x300/2563eb/FFFFFF?text=Stationary" alt="Gallery Image 7" className="w-full h-48 object-cover hover:scale-105 transition duration-300" />
-                        </div>
-                        <div className="overflow-hidden rounded-lg shadow-md">
-                            <img src="https://placehold.co/400x300/2563eb/FFFFFF?text=Cup+Printing" alt="Gallery Image 8" className="w-full h-48 object-cover hover:scale-105 transition duration-300" />
-                        </div>
+                        {
+                            galleries.length > 0 && galleries.map((gallery, index) => (
+                                <div className="overflow-hidden rounded-lg shadow-md" key={index}>
+                                    <img src={gallery?.gallery_image} alt={gallery?.title} className="w-fit h-48 object-cover hover:scale-105 transition duration-300" />
+                                </div>
+                            ))
+                        }
                     </div>
                 </div>
             </section>
